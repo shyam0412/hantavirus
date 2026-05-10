@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Hantavirus 2026 — Live Situation Report. Real-time updates, India status, local help, ambulance, hospitals, and government helplines.">
+<meta name="theme-color" content="#0a0a0a">
+<title>Hantavirus 2026 — Live Situation Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080808;
+    --surface: #111111;
+    --surface2: #181818;
+    --border: #2a2a2a;
+    --text: #e8e8e8;
+    --text-dim: #888;
+    --text-muted: #555;
+    --accent: #ff4444;
+    --accent-glow: rgba(255,68,68,0.15);
+    --amber: #f5a623;
+    --green: #22c55e;
+    --blue: #3b82f6;
+    --mono: 'IBM Plex Mono', monospace;
+    --cond: 'Barlow Condensed', sans-serif;
+    --body: 'Barlow', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    font-size: 15px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.4;
+  }
+
+  /* LIVE TICKER */
+  .ticker-wrap {
+    background: var(--accent);
+    overflow: hidden;
+    padding: 8px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .ticker-label {
+    background: #fff;
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 10px;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+    float: left;
+    margin-right: 16px;
+  }
+  .ticker-track {
+    display: flex;
+    white-space: nowrap;
+    animation: ticker 40s linear infinite;
+    overflow: hidden;
+  }
+  .ticker-track span {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: #fff;
+    font-weight: 600;
+    padding-right: 60px;
+    letter-spacing: 0.03em;
+  }
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* HEADER */
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 60px 24px 48px;
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .meta-line {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .meta-line .live-dot {
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .meta-line .live-dot::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: inline-block;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
+
+  h1 {
+    font-family: var(--cond);
+    font-size: clamp(52px, 10vw, 100px);
+    font-weight: 900;
+    line-height: 0.92;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  h1 .accent { color: var(--accent); }
+
+  .header-sub {
+    font-family: var(--cond);
+    font-size: clamp(18px, 3vw, 28px);
+    font-weight: 400;
+    color: var(--text-dim);
+    margin-top: 16px;
+    max-width: 700px;
+    line-height: 1.3;
+  }
+
+  /* STATS GRID */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    border-top: 1px solid var(--border);
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .stat-box {
+    padding: 32px 28px;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    transition: background 0.2s;
+  }
+  .stat-box:hover { background: var(--surface); }
+  .stat-box::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+    transform-origin: left;
+  }
+  .stat-box:hover::after { transform: scaleX(1); }
+
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .stat-value {
+    font-family: var(--cond);
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 900;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .stat-value.red { color: var(--accent); }
+  .stat-value.amber { color: var(--amber); }
+  .stat-value.green { color: var(--green); }
+  .stat-value.blue { color: var(--blue); }
+
+  .stat-detail {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 6px;
+    font-family: var(--mono);
+  }
+
+  /* SECTION */
+  section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 48px 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+
+  .section-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+  }
+
+  h2 {
+    font-family: var(--cond);
+    font-size: clamp(24px, 4vw, 40px);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+
+  /* INDIA FIRST SECTION */
+  .india-banner {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--amber);
+    padding: 24px 28px;
+    margin-bottom: 24px;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .india-icon {
+    font-size: 32px;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  .india-content h3 {
+    font-family: var(--cond);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--amber);
+    margin-bottom: 8px;
+  }
+
+  .india-content p {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* STATUS TAGS */
+  .tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 2px;
+  }
+
+  .tag-safe { background: rgba(34,197,94,0.15); color: var(--green); border: 1px solid rgba(34,197,94,0.3); }
+  .tag-watch { background: rgba(245,166,35,0.15); color: var(--amber); border: 1px solid rgba(245,166,35,0.3); }
+  .tag-alert { background: rgba(255,68,68,0.15); color: var(--accent); border: 1px solid rgba(255,68,68,0.3); }
+  .tag-info { background: rgba(59,130,246,0.15); color: var(--blue); border: 1px solid rgba(59,130,246,0.3); }
+
+  /* UPDATES FEED */
+  .updates-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .update-item {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+    padding: 20px 0;
+    transition: background 0.2s;
+    cursor: default;
+  }
+  .update-item:first-child { border-top: 1px solid var(--border); }
+  .update-item:hover { background: var(--surface); padding-left: 12px; padding-right: 12px; margin: 0 -12px; }
+
+  .update-time {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    padding-top: 3px;
+    line-height: 1.4;
+  }
+
+  .update-body h4 {
+    font-family: var(--cond);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+
+  .update-body p {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.55;
+  }
+
+  .update-tags {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+
+  /* WORLD SITUATION */
+  .country-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 8px;
+  }
+
+  .country-card {
+    background: var(--surface);
+    padding: 24px;
+    transition: background 0.2s;
+  }
+  .country-card:hover { background: var(--surface2); }
+
+  .country-name {
+    font-family: var(--cond);
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .country-flag { font-size: 18px; }
+
+  .country-stat {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+
+  .country-note {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  /* SYMPTOMS */
+  .symptoms-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .symptom-phase {
+    background: var(--surface);
+    padding: 28px;
+  }
+
+  .phase-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .symptom-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .symptom-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    color: var(--text-dim);
+  }
+
+  .symptom-list li::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .phase-1 li::before { background: var(--amber); }
+  .phase-2 li::before { background: var(--accent); }
+
+  /* LOCAL HELP — THE MOST IMPORTANT SECTION */
+  .help-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--accent);
+    padding: 40px;
+    margin-top: 8px;
+  }
+
+  .help-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+    margin-top: 32px;
+  }
+
+  .help-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 24px;
+    position: relative;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .help-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+  .help-card-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .help-card h3 {
+    font-family: var(--cond);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .help-number {
+    font-family: var(--mono);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 4px;
+    letter-spacing: 0.03em;
+  }
+
+  .help-number-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .help-note {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* HOSPITAL FINDER */
+  .hospital-finder {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 28px;
+    margin-top: 24px;
+  }
+
+  .hospital-finder h3 {
+    font-family: var(--cond);
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+
+  .finder-sub {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    font-family: var(--mono);
+  }
+
+  .hospital-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .hospital-item {
+    background: var(--bg);
+    padding: 16px 20px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .hospital-item:hover { background: var(--surface2); }
+
+  .hospital-name {
+    font-family: var(--cond);
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+
+  .hospital-meta {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  .hospital-badge {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 2px;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  .badge-govt { background: rgba(34,197,94,0.12); color: var(--green); border: 1px solid rgba(34,197,94,0.25); }
+  .badge-pvt { background: rgba(59,130,246,0.12); color: var(--blue); border: 1px solid rgba(59,130,246,0.25); }
+
+  /* PREVENTION */
+  .prevention-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 8px;
+  }
+
+  .prevention-item {
+    background: var(--surface);
+    padding: 24px;
+    transition: background 0.2s;
+  }
+  .prevention-item:hover { background: var(--surface2); }
+
+  .prevention-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .prevention-item h4 {
+    font-family: var(--cond);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .prevention-item p {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+
+  /* GOVT HELP BOXES */
+  .govt-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 8px;
+  }
+
+  .govt-card {
+    border: 1px solid var(--border);
+    padding: 24px;
+    background: var(--surface);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .govt-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--blue);
+  }
+
+  .govt-card h3 {
+    font-family: var(--cond);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .govt-detail {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+
+  .govt-link {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--blue);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+  }
+  .govt-link:hover { text-decoration: underline; }
+
+  /* ACCORDION */
+  .accordion {
+    border: 1px solid var(--border);
+    margin-top: 8px;
+  }
+
+  .accordion-item {
+    border-bottom: 1px solid var(--border);
+  }
+  .accordion-item:last-child { border-bottom: none; }
+
+  .accordion-trigger {
+    width: 100%;
+    background: var(--surface);
+    border: none;
+    padding: 20px 24px;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s;
+  }
+  .accordion-trigger:hover { background: var(--surface2); }
+
+  .accordion-trigger-label {
+    font-family: var(--cond);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .accordion-trigger-icon {
+    font-family: var(--mono);
+    font-size: 16px;
+    color: var(--text-muted);
+    transition: transform 0.3s;
+  }
+
+  .accordion-content {
+    display: none;
+    padding: 24px;
+    background: var(--bg);
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    border-top: 1px solid var(--border);
+  }
+
+  .accordion-item.open .accordion-content { display: block; }
+  .accordion-item.open .accordion-trigger-icon { transform: rotate(45deg); }
+
+  /* WHO RISK TABLE */
+  .risk-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 16px;
+    font-size: 13px;
+  }
+
+  .risk-table th {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .risk-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-dim);
+    vertical-align: top;
+  }
+
+  .risk-table tr:hover td { background: var(--surface); }
+
+  /* FOOTER */
+  footer {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .footer-sources {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.8;
+  }
+
+  .footer-disclaimer {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    padding: 16px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  /* NAV */
+  .nav-bar {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 16px 24px;
+    display: flex;
+    gap: 24px;
+    overflow-x: auto;
+    border-bottom: 1px solid var(--border);
+    scrollbar-width: none;
+  }
+
+  .nav-bar a {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: color 0.2s;
+    padding-bottom: 2px;
+    border-bottom: 1px solid transparent;
+  }
+  .nav-bar a:hover { color: var(--text); border-bottom-color: var(--accent); }
+
+  /* SEARCH */
+  .hospital-search-bar {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+
+  .city-btn {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 8px 14px;
+    cursor: pointer;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: all 0.2s;
+  }
+  .city-btn:hover, .city-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  /* RESPONSIVE */
+  @media (max-width: 640px) {
+    .symptoms-grid { grid-template-columns: 1fr; }
+    .update-item { grid-template-columns: 1fr; gap: 6px; }
+    .update-time { font-size: 10px; }
+    .help-section { padding: 24px 20px; }
+    h1 { font-size: 52px; }
+    .india-banner { flex-direction: column; gap: 12px; }
+    header { padding: 40px 20px 32px; }
+  }
+
+  .separator {
+    height: 1px;
+    background: var(--border);
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+</style>
+</head>
+<body>
+
+<!-- LIVE TICKER -->
+<div class="ticker-wrap">
+  <span class="ticker-label">● LIVE</span>
+  <div class="ticker-track">
+    <span>WHO CONFIRMS 8 CASES, 3 DEATHS — MV HONDIUS CRUISE SHIP — ANDES VIRUS STRAIN IDENTIFIED &nbsp;|&nbsp; INDIA: 2 CREW MEMBERS ASYMPTOMATIC, UNDER OBSERVATION &nbsp;|&nbsp; CDC RAISES TRAVEL ALERT TO LEVEL 3 &nbsp;|&nbsp; GLOBAL RISK REMAINS LOW — WHO, MAY 8 2026 &nbsp;|&nbsp; SHIP ARRIVES CANARY ISLANDS MAY 11 — PASSENGER MONITORING UNDERWAY &nbsp;|&nbsp; NO CASES CONFIRMED IN INDIA &nbsp;|&nbsp; ICMR: NO IMMEDIATE PUBLIC HEALTH THREAT &nbsp;|&nbsp; INCUBATION PERIOD UP TO 45 DAYS — ALL EXPOSED PASSENGERS UNDER WATCH &nbsp;|&nbsp;</span>
+    <span>WHO CONFIRMS 8 CASES, 3 DEATHS — MV HONDIUS CRUISE SHIP — ANDES VIRUS STRAIN IDENTIFIED &nbsp;|&nbsp; INDIA: 2 CREW MEMBERS ASYMPTOMATIC, UNDER OBSERVATION &nbsp;|&nbsp; CDC RAISES TRAVEL ALERT TO LEVEL 3 &nbsp;|&nbsp; GLOBAL RISK REMAINS LOW — WHO, MAY 8 2026 &nbsp;|&nbsp; SHIP ARRIVES CANARY ISLANDS MAY 11 — PASSENGER MONITORING UNDERWAY &nbsp;|&nbsp; NO CASES CONFIRMED IN INDIA &nbsp;|&nbsp; ICMR: NO IMMEDIATE PUBLIC HEALTH THREAT &nbsp;|&nbsp; INCUBATION PERIOD UP TO 45 DAYS — ALL EXPOSED PASSENGERS UNDER WATCH &nbsp;|&nbsp;</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav-bar">
+  <a href="#india">India Status</a>
+  <a href="#live-updates">Live Updates</a>
+  <a href="#world">World Situation</a>
+  <a href="#symptoms">Symptoms</a>
+  <a href="#local-help">Local Help</a>
+  <a href="#hospitals">Hospitals</a>
+  <a href="#govt">Gov. Support</a>
+  <a href="#prevention">Prevention</a>
+</nav>
+
+<!-- HEADER -->
+<header>
+  <div class="meta-line">
+    <span class="live-dot">Live Updates</span>
+    <span>May 11, 2026</span>
+    <span>Situation Report</span>
+    <span>Sources: WHO · ICMR · NCDC · CDC</span>
+  </div>
+  <h1>HANTA<br><span class="accent">VIRUS</span></h1>
+  <div class="header-sub">The 2026 outbreak — what's happening, where, and what you need to do. India first. No panic, just facts.</div>
+</header>
+
+<!-- STATS -->
+<div class="stats-grid">
+  <div class="stat-box">
+    <div class="stat-label">Confirmed Cases · Cruise Cluster</div>
+    <div class="stat-value red">8</div>
+    <div class="stat-detail">As of May 9, 2026 · WHO</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-label">Deaths Reported</div>
+    <div class="stat-value red">3</div>
+    <div class="stat-detail">Case fatality ratio: 38% in this cluster</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-label">Countries Monitoring</div>
+    <div class="stat-value amber">23+</div>
+    <div class="stat-detail">Passengers from 23 nationalities aboard</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-label">India Cases Confirmed</div>
+    <div class="stat-value green">0</div>
+    <div class="stat-detail">2 Indian crew — asymptomatic, observed</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-label">WHO Global Risk Level</div>
+    <div class="stat-value blue">LOW</div>
+    <div class="stat-detail">As assessed on May 4, 2026</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-label">Global Annual Cases (Asia/Europe)</div>
+    <div class="stat-value">~100K</div>
+    <div class="stat-detail">Mostly HFRS type · Asia & Europe endemic</div>
+  </div>
+</div>
+
+<!-- INDIA FIRST -->
+<section id="india">
+  <div class="section-header">
+    <span class="section-num">01 /</span>
+    <h2>INDIA STATUS</h2>
+    <span class="tag tag-safe">No Cases</span>
+  </div>
+
+  <div class="india-banner">
+    <div class="india-icon">🇮🇳</div>
+    <div class="india-content">
+      <h3>No confirmed Hantavirus cases in India as of May 11, 2026</h3>
+      <p>Two Indian crew members who were aboard the MV Hondius cruise ship have been confirmed asymptomatic and are under observation per international health protocols. ICMR's National Institute of Virology states the cases appear isolated with no immediate public health threat to India. NCDC, IDSP and IHR-NFP India are actively monitoring the situation in coordination with WHO.</p>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="accordion-item">
+      <button class="accordion-trigger" onclick="toggleAccordion(this)">
+        <span class="accordion-trigger-label"><span class="tag tag-watch">WATCH</span> What is India's current preparedness?</span>
+        <span class="accordion-trigger-icon">+</span>
+      </button>
+      <div class="accordion-content">
+        India has adequate diagnostic capacity through the nationwide Viral Research and Diagnostic Laboratory (VRDL) network. Senior officials from IDSP and IHR-NFP India attended a high-level review conference convened by the Public Health Emergency Operations Centre (PHEOC) under IDSP and NCDC to evaluate preparedness measures. Experts from ICMR and AIIMS have stated hantavirus does not pose an immediate public health threat to India, as the virus does not spread easily between humans, and the rodent species carrying the Andes strain are not commonly found in Indian households.
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger" onclick="toggleAccordion(this)">
+        <span class="accordion-trigger-label"><span class="tag tag-info">INFO</span> Is India's rodent population a risk factor?</span>
+        <span class="accordion-trigger-icon">+</span>
+      </button>
+      <div class="accordion-content">
+        While asymptomatic exposure to hantaviruses has been documented in India, serious outbreaks have not been reported. Dr. Surendran R., Consultant in Infectious Disease at SIMS Hospital Chennai, notes: "Hantavirus is mainly transmitted through contact with wild and non-domesticated rodents — not generally found in human dwellings. So people in Indian cities are not at risk." However, climate change and poor garbage disposal are increasing rodent populations. From India's perspective, leptospirosis remains a far bigger rodent-borne threat currently. That said, awareness and hygiene remain important.
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger" onclick="toggleAccordion(this)">
+        <span class="accordion-trigger-label"><span class="tag tag-info">INFO</span> Should I be worried if I recently returned from abroad?</span>
+        <span class="accordion-trigger-icon">+</span>
+      </button>
+      <div class="accordion-content">
+        If you were aboard a ship in the Atlantic region between April 6–28, 2026 or had close contact with someone who was — monitor yourself for symptoms for 45 days. The incubation period for Andes hantavirus can be several weeks. If you develop fever, severe muscle aches, or breathing difficulty, contact your nearest government hospital or call the NCDC helpline immediately. WHO advises frequent handwashing, symptom vigilance, and self-isolation if you develop symptoms.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LIVE UPDATES -->
+<section id="live-updates">
+  <div class="section-header">
+    <span class="section-num">02 /</span>
+    <h2>LIVE UPDATES</h2>
+    <span class="tag tag-alert">Updating</span>
+  </div>
+
+  <div class="updates-feed">
+    <div class="update-item">
+      <div class="update-time">May 11<br>2026<br>Today</div>
+      <div class="update-body">
+        <h4>MV Hondius reaches Canary Islands — passengers begin disembarking</h4>
+        <p>The cruise ship carrying 147 passengers and crew arrives off Tenerife, Spain. Nations worldwide are tracking returning passengers. All disembarking individuals are being screened according to WHO protocols.</p>
+        <div class="update-tags"><span class="tag tag-alert">Breaking</span><span class="tag tag-info">Global</span></div>
+      </div>
+    </div>
+    <div class="update-item">
+      <div class="update-time">May 9<br>2026</div>
+      <div class="update-body">
+        <h4>WHO: 8 cases confirmed — 6 lab-confirmed Andes virus</h4>
+        <p>Total case count rises to 8 with 3 deaths (38% CFR in cluster). Five cases PCR-confirmed as Andes hantavirus. Three remain suspected. UKHSA reports a third British national with suspected infection. CDC raises travel response to Level 3.</p>
+        <div class="update-tags"><span class="tag tag-alert">WHO Update</span><span class="tag tag-info">CDC</span></div>
+      </div>
+    </div>
+    <div class="update-item">
+      <div class="update-time">May 8<br>2026</div>
+      <div class="update-body">
+        <h4>India confirms 2 Indian crew members are asymptomatic</h4>
+        <p>Union Health Ministry confirms two Indian nationals aboard MV Hondius are asymptomatic and under observation per IHR protocols. India is coordinating closely with WHO. ICMR: "No immediate public health threat to India."</p>
+        <div class="update-tags"><span class="tag tag-safe">India Update</span><span class="tag tag-info">ICMR</span></div>
+      </div>
+    </div>
+    <div class="update-item">
+      <div class="update-time">May 7<br>2026</div>
+      <div class="update-body">
+        <h4>PHEOC India convenes high-level preparedness review</h4>
+        <p>Senior officials from IDSP and IHR-NFP India attend the PHEOC review conference under NCDC. India's VRDL diagnostic network confirmed as sufficient for detection.</p>
+        <div class="update-tags"><span class="tag tag-watch">India Preparedness</span><span class="tag tag-info">NCDC</span></div>
+      </div>
+    </div>
+    <div class="update-item">
+      <div class="update-time">May 4<br>2026</div>
+      <div class="update-body">
+        <h4>WHO assesses global risk as LOW — issues first Disease Outbreak Notice</h4>
+        <p>7 cases reported (2 confirmed, 5 suspected), 3 deaths, 1 critically ill, 3 mild. WHO Director-General: "While this is a serious incident, we assess public health risk as low." Ship moored off Cabo Verde at this point.</p>
+        <div class="update-tags"><span class="tag tag-info">WHO DON599</span></div>
+      </div>
+    </div>
+    <div class="update-item">
+      <div class="update-time">May 2<br>2026</div>
+      <div class="update-body">
+        <h4>UK alerts WHO — first cluster report from cruise ship MV Hondius</h4>
+        <p>United Kingdom IHR focal point notifies WHO of a severe acute respiratory illness cluster aboard the ship. Illness onset traced between April 6–28. Fever, GI symptoms, rapid progression to pneumonia and ARDS reported.</p>
+        <div class="update-tags"><span class="tag tag-alert">Outbreak Origin</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORLD SITUATION -->
+<section id="world">
+  <div class="section-header">
+    <span class="section-num">03 /</span>
+    <h2>WORLD SITUATION</h2>
+  </div>
+
+  <div class="country-grid">
+    <div class="country-card">
+      <div class="country-name"><span class="country-flag">🌊</span> Cruise Cluster (MV Hondius)</div>
+      <div class="country-stat">8 cases · 3 deaths · Multi-country</div>
+      <div class="country-note">Active outbreak. Andes virus confirmed. Ship from South America, passengers from 23 countries. Currently docked off Tenerife, Spain.</div>
+    </div>
+    <div class="country-card">
+      <div class="country-name"><span class="country-flag">🇦🇷</span> South America (Americas)</div>
+      <div class="country-stat">229 cases, 59 deaths · 2025 (8 countries)</div>
+      <div class="country-note">HPS type. CFR 25–50%. Andes virus is the only strain with limited human-to-human spread. Argentina, Brazil, Chile are most affected annually.</div>
+    </div>
+    <div class="country-card">
+      <div class="country-name"><span class="country-flag">🇨🇳</span> China & East Asia</div>
+      <div class="country-stat">Thousands annually · HFRS type</div>
+      <div class="country-note">HFRS (kidney-affecting type). Incidence declining over decades due to vaccine availability in China. CFR under 1–15%.</div>
+    </div>
+    <div class="country-card">
+      <div class="country-name"><span class="country-flag">🇪🇺</span> Europe</div>
+      <div class="country-stat">1,885 cases · 2023 (ECDC)</div>
+      <div class="country-note">Lowest rate recorded between 2019–2023. HFRS type predominant. Germany, Finland, Sweden most affected in Europe.</div>
+    </div>
+    <div class="country-card">
+      <div class="country-name"><span class="country-flag">🇺🇸</span> United States</div>
+      <div class="country-stat">No new cases from cruise cluster · CDC</div>
+      <div class="country-note">CDC at Travel Level 3. No Andes virus cases from cruise reported in US. Working with State Dept to repatriate Americans safely.</div>
+    </div>
+    <div class="country-card">
+      <div class="country-name"><span class="country-flag">🇮🇳</span> India</div>
+      <div class="country-stat">0 confirmed cases · ICMR, May 2026</div>
+      <div class="country-note">No cases. 2 Indian crew members asymptomatic. ICMR: cases appear isolated. No immediate threat. VRDL network on alert.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SYMPTOMS -->
+<section id="symptoms">
+  <div class="section-header">
+    <span class="section-num">04 /</span>
+    <h2>KNOW THE SYMPTOMS</h2>
+  </div>
+
+  <div class="symptoms-grid">
+    <div class="symptom-phase phase-1">
+      <div class="phase-label">● Stage 1 — Days 1–5 · Early (Flu-like)</div>
+      <ul class="symptom-list">
+        <li>High fever and chills</li>
+        <li>Severe muscle aches (especially thighs, hips, back)</li>
+        <li>Intense headache</li>
+        <li>Fatigue and dizziness</li>
+        <li>Nausea, vomiting, diarrhea</li>
+        <li>Abdominal pain</li>
+      </ul>
+      <p style="margin-top:16px; font-size:12px; color:var(--text-muted); font-family: var(--mono);">⚠ Easy to mistake for flu, dengue or viral fever. Don't ignore if you have rodent or travel exposure.</p>
+    </div>
+    <div class="symptom-phase phase-2">
+      <div class="phase-label">● Stage 2 — Days 5–10 · Critical (Seek Emergency Care)</div>
+      <ul class="symptom-list">
+        <li>Shortness of breath — URGENT SIGN</li>
+        <li>Cough with fluid / postnasal drainage</li>
+        <li>Fluid buildup in lungs</li>
+        <li>Low blood pressure / shock</li>
+        <li>Reduced heart efficiency</li>
+        <li>Organ failure in severe cases</li>
+      </ul>
+      <p style="margin-top:16px; font-size:12px; color:var(--accent); font-family: var(--mono);">🚨 Stage 2 escalates within hours. Call 108 or go to nearest ICU-capable hospital immediately.</p>
+    </div>
+  </div>
+
+  <div style="border: 1px solid var(--border); background: var(--surface); padding: 20px 24px; margin-top: 1px;">
+    <p style="font-family: var(--mono); font-size: 12px; color: var(--text-muted);">
+      <strong style="color: var(--amber);">Important:</strong> There is currently no approved vaccine or antiviral cure for hantavirus. Early supportive care in an ICU dramatically improves survival chances. The faster you get to hospital, the better.
+    </p>
+  </div>
+</section>
+
+<!-- LOCAL HELP — PRIMARY SECTION -->
+<section id="local-help">
+  <div class="section-header">
+    <span class="section-num">05 /</span>
+    <h2>LOCAL HELP</h2>
+    <span class="tag tag-alert">Emergency</span>
+  </div>
+
+  <div class="help-section">
+    <p style="font-family: var(--cond); font-size: 20px; color: var(--text-dim); margin-bottom: 8px;">If you or someone you know has symptoms — don't search, call now.</p>
+    <p style="font-family: var(--mono); font-size: 12px; color: var(--text-muted);">All numbers below are India government emergency numbers, free to call 24/7.</p>
+
+    <div class="help-grid">
+      <div class="help-card">
+        <span class="help-card-icon">🚑</span>
+        <h3>Ambulance</h3>
+        <span class="help-number">108</span>
+        <span class="help-number-label">National Emergency Ambulance · 24/7 Free</span>
+        <p class="help-note">Works across all states. Tell the operator you suspect a viral infection with breathing difficulty. Request hospital with ICU. Available in all cities and rural areas.</p>
+      </div>
+
+      <div class="help-card">
+        <span class="help-card-icon">☎️</span>
+        <h3>National Health Helpline</h3>
+        <span class="help-number">1800-11-4477</span>
+        <span class="help-number-label">NHRC · Toll Free · Health Queries</span>
+        <p class="help-note">For health queries, symptom guidance, and nearest public hospital referral. Ministry of Health helpline for general health emergencies.</p>
+      </div>
+
+      <div class="help-card">
+        <span class="help-card-icon">🦠</span>
+        <h3>Disease Surveillance (NCDC)</h3>
+        <span class="help-number">011-23921401</span>
+        <span class="help-number-label">NCDC · Outbreak Reporting</span>
+        <p class="help-note">National Centre for Disease Control. Report suspected Hantavirus exposure or unusual fever clusters. Active monitoring of the 2026 situation.</p>
+      </div>
+
+      <div class="help-card">
+        <span class="help-card-icon">🧬</span>
+        <h3>ICMR Helpline</h3>
+        <span class="help-number">011-26588895</span>
+        <span class="help-number-label">Indian Council of Medical Research</span>
+        <p class="help-note">For infectious disease queries, testing referrals, and coordination. ICMR's NIV is the apex body monitoring hantavirus in India.</p>
+      </div>
+
+      <div class="help-card">
+        <span class="help-card-icon">🚨</span>
+        <h3>General Emergency</h3>
+        <span class="help-number">112</span>
+        <span class="help-number-label">Unified Emergency Number · Police + Fire + Medical</span>
+        <p class="help-note">If 108 is unreachable, call 112. Works across all states and union territories. Can coordinate ambulance and nearest medical center.</p>
+      </div>
+
+      <div class="help-card">
+        <span class="help-card-icon">💊</span>
+        <h3>PM-Jan Arogya Helpline</h3>
+        <span class="help-number">14555</span>
+        <span class="help-number-label">Ayushman Bharat / PMJAY</span>
+        <p class="help-note">For beneficiaries of government health insurance. Get guidance on free treatment at empanelled hospitals under PMJAY for eligible patients.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEST HOSPITALS BY CITY -->
+<section id="hospitals">
+  <div class="section-header">
+    <span class="section-num">06 /</span>
+    <h2>BEST HOSPITALS NEAR YOU</h2>
+  </div>
+  <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; font-family: var(--mono);">In case of suspected infection, go to the nearest government hospital with an ICU. Below are leading institutions by city.</p>
+
+  <div class="hospital-search-bar">
+    <button class="city-btn active" onclick="filterCity('all', this)">All Cities</button>
+    <button class="city-btn" onclick="filterCity('delhi', this)">Delhi</button>
+    <button class="city-btn" onclick="filterCity('mumbai', this)">Mumbai</button>
+    <button class="city-btn" onclick="filterCity('bangalore', this)">Bangalore</button>
+    <button class="city-btn" onclick="filterCity('chennai', this)">Chennai</button>
+    <button class="city-btn" onclick="filterCity('kolkata', this)">Kolkata</button>
+    <button class="city-btn" onclick="filterCity('hyderabad', this)">Hyderabad</button>
+  </div>
+
+  <div class="hospital-list" id="hospitalList">
+    <div class="hospital-item" data-city="delhi">
+      <div>
+        <div class="hospital-name">All India Institute of Medical Sciences (AIIMS)</div>
+        <div class="hospital-meta">New Delhi · Ansari Nagar · Infectious Disease Dept: 011-26588500</div>
+      </div>
+      <div><span class="hospital-badge badge-govt">GOVT · APEX</span></div>
+    </div>
+    <div class="hospital-item" data-city="delhi">
+      <div>
+        <div class="hospital-name">Safdarjung Hospital</div>
+        <div class="hospital-meta">New Delhi · Sri Aurobindo Marg · Emergency: 011-26730000</div>
+      </div>
+      <div><span class="hospital-badge badge-govt">GOVT</span></div>
+    </div>
+    <div class="hospital-item" data-city="delhi">
+      <div>
+        <div class="hospital-name">Ram Manohar Lohia Hospital</div>
+        <div class="hospital-meta">New Delhi · Baba Kharak Singh Marg · 011-23365525</div>
+      </div>
+      <div><span class="hospital-badge badge-govt">GOVT</span></div>
+    </div>
+    <div class="hospital-item" data-city="mumbai">
+      <div>
+        <div class="hospital-name">KEM Hospital (King Edward Memorial)</div>
+        <div class="hospital-meta">Mumbai · Parel · Emergency: 022-24136051</div>
+      </div>
+      <div><span class="hospital-badge badge-govt">GOVT</span></div>
+    </div>
+    <div class="hospital-item" data-city="mumbai">
+      <div>
+        <div class="hospital-name">Kasturba Hospital for Infectious Diseases</div>
+        <div class="hospital-meta">Mumbai · Saat Rasta, Chinchpokli · 022-23082244</div>
+      </div>
+      <div><span class="hospital-badge badge-govt">GOVT · SPECIALIST</span></div>
+    </div>
+    <div class="hospital-item" data-city="mumbai">
+      <div>
+        <div class="hospital-name">Nair Hospital (BYL Nair Charitable Hospital)</div>
+        <div class="hospital-meta">Mumbai · Mumbai Central · 022-23027600</div>
+      </div>
+      <div><span class="hospital-badge badge-govt">GOVT</span></div>
+    </div>
+    <div class="hospital-item" data-city="bangalore">
+      <div>
+        <div class="hospital-name">Rajiv Gandhi Government General Hospital</div>
+        <div class="hospital-meta">Bangalore · KR Circle · Emergency: 080-22942400</div>
+      </div>
+      <div><span class="hospital-badge badge-govt">GOVT</span></div>
+    </div>
+    <div class="hospital-item" data-city="bangalore">
+      <div>
+        <div class="hospital-name">Victoria Hospital</div>
+        <div class="hospital-meta">Bangalore · Majestic · Infectious Disease Unit · 080-26703700</div>
+      </div>
+      <div><span class="hospital-badge badge-govt">GOVT</span></div>
+    </div>
+    <div class="hospital-item" data-city="bangalore">
+      <div>
+        <div class="hospital-name">NIMHANS (For Neurological Complications)</div>
+        <div class="hospital-meta">Bangalore · Hosur Road · 080-46110007</div>
+      </div>
+      <div><span class="hospital-badge badge-govt">GOVT · SPECIALIST</span></div>
+    </div>
+    <div class="hospital-item" data-city="chennai">
+      <div>
+        <div class="hospital-name">Rajiv Gandhi Govt. General Hospital (GGH)</div>
+        <div class="hospital-meta">Chennai · Park Town · Emergency: 044-25305000</div>
+      </div>
+      <div><span class="hospital-badge badge-govt">GOVT</span></div>
+    </div>
+    <div class="hospital-item" data-city="chennai">
+      <div>
+        <div class="hospital-name">SIMS Hospital</div>
+        <div class="hospital-meta">Chennai · Vadapalani · Infectious Disease · 044-42271000</div>
+      </div>
+      <div><span class="hospital-badge badge-pvt">PRIVATE</span></div>
+    </div>
+    <div class="hospital-item" data-city="kolkata">
+      <div>
+        <div class="hospital-name">Calcutta National Medical College</div>
+        <div class="hospital-meta">Kolkata · CR Avenue · 033-22122124</div>
+      </div>
+      <div><span class="hospital-badge badge-govt">GOVT</span></div>
+    </div>
+    <div class="hospital-item" data-city="kolkata">
+      <div>
+        <div class="hospital-name">Infectious Diseases Hospital (Beleghata ID)</div>
+        <div class="hospital-meta">Kolkata · Beleghata · Specialist Infectious Disease · 033-23501700</div>
+      </div>
+      <div><span class="hospital-badge badge-govt">GOVT · SPECIALIST</span></div>
+    </div>
+    <div class="hospital-item" data-city="hyderabad">
+      <div>
+        <div class="hospital-name">Gandhi Hospital</div>
+        <div class="hospital-meta">Hyderabad · Secunderabad · Emergency: 040-27505566</div>
+      </div>
+      <div><span class="hospital-badge badge-govt">GOVT</span></div>
+    </div>
+    <div class="hospital-item" data-city="hyderabad">
+      <div>
+        <div class="hospital-name">Osmania General Hospital</div>
+        <div class="hospital-meta">Hyderabad · Afzalgunj · 040-24600013</div>
+      </div>
+      <div><span class="hospital-badge badge-govt">GOVT</span></div>
+    </div>
+  </div>
+
+  <p style="font-family: var(--mono); font-size: 11px; color: var(--text-muted); margin-top: 16px;">
+    ● For nearest hospital: Google "government hospital near me" or call 108 and they will direct you. Government hospitals with ICUs are your best option for infectious disease care.
+  </p>
+</section>
+
+<!-- GOVERNMENT SUPPORT -->
+<section id="govt">
+  <div class="section-header">
+    <span class="section-num">07 /</span>
+    <h2>GOVERNMENT SUPPORT</h2>
+  </div>
+
+  <div class="govt-grid">
+    <div class="govt-card">
+      <h3>🏛️ Ministry of Health & Family Welfare</h3>
+      <p class="govt-detail">The nodal body coordinating India's response. Issued advisory on hantavirus. Coordinating with WHO and IHR. Monitoring returning passengers.</p>
+      <a class="govt-link" href="https://mohfw.gov.in" target="_blank">mohfw.gov.in →</a>
+    </div>
+    <div class="govt-card">
+      <h3>🔬 ICMR — Testing & Research</h3>
+      <p class="govt-detail">ICMR's National Institute of Virology (NIV) Pune is India's apex body for virus detection. The VRDL network across India can detect hantavirus infections.</p>
+      <a class="govt-link" href="https://icmr.gov.in" target="_blank">icmr.gov.in →</a>
+    </div>
+    <div class="govt-card">
+      <h3>📡 NCDC — Disease Surveillance</h3>
+      <p class="govt-detail">National Centre for Disease Control runs the Integrated Disease Surveillance Programme (IDSP). Operates the PHEOC for outbreak response. Actively monitoring.</p>
+      <a class="govt-link" href="https://ncdc.mohfw.gov.in" target="_blank">ncdc.mohfw.gov.in →</a>
+    </div>
+    <div class="govt-card">
+      <h3>💊 Ayushman Bharat (PMJAY)</h3>
+      <p class="govt-detail">Government health insurance scheme covering ₹5 lakh per family per year for eligible households. Can cover hospitalisation costs for infectious disease treatment at empanelled hospitals. Call 14555 to check eligibility.</p>
+      <a class="govt-link" href="https://pmjay.gov.in" target="_blank">pmjay.gov.in →</a>
+    </div>
+    <div class="govt-card">
+      <h3>🌐 WHO India</h3>
+      <p class="govt-detail">WHO's India office is coordinating with NCDC, IDSP, and IHR-NFP India. Monitoring the global cruise ship cluster and advising on imported case protocols.</p>
+      <a class="govt-link" href="https://www.who.int/india" target="_blank">who.int/india →</a>
+    </div>
+    <div class="govt-card">
+      <h3>🛂 Airport Health Authority</h3>
+      <p class="govt-detail">Passengers arriving from affected regions are being screened at major international airports. Port health officers are stationed at entry points. Report symptoms on arrival.</p>
+      <a class="govt-link" href="https://dgca.gov.in" target="_blank">dgca.gov.in →</a>
+    </div>
+  </div>
+</section>
+
+<!-- PREVENTION -->
+<section id="prevention">
+  <div class="section-header">
+    <span class="section-num">08 /</span>
+    <h2>PREVENTION</h2>
+    <span class="tag tag-safe">Best Defence</span>
+  </div>
+  <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 24px;">No vaccine exists. Prevention is your only shield. These are simple, effective measures endorsed by WHO and CDC.</p>
+
+  <div class="prevention-grid">
+    <div class="prevention-item">
+      <span class="prevention-icon">🐭</span>
+      <h4>Avoid Rodent Contact</h4>
+      <p>Don't touch mice, rats, their nests, droppings, or urine — especially in warehouses, storage areas, ships, and rural areas. This is the primary route of infection.</p>
+    </div>
+    <div class="prevention-item">
+      <span class="prevention-icon">🧹</span>
+      <h4>Safe Rodent Cleanup</h4>
+      <p>Never sweep or vacuum rodent droppings dry — this aerosolizes the virus. Wet the area with bleach solution first, then clean with gloves and a mask. Dispose in sealed bags.</p>
+    </div>
+    <div class="prevention-item">
+      <span class="prevention-icon">🪟</span>
+      <h4>Ventilate Before Entering</h4>
+      <p>If entering a closed space (shed, cabin, storeroom) that may have had rodents — open doors and windows 30 minutes before entering. Don't let dust settle on you.</p>
+    </div>
+    <div class="prevention-item">
+      <span class="prevention-icon">🧤</span>
+      <h4>Wear Gloves & Mask</h4>
+      <p>When working in rodent-prone areas, wear rubber gloves and an N95 mask. The virus spreads through airborne particles from infected rodent secretions.</p>
+    </div>
+    <div class="prevention-item">
+      <span class="prevention-icon">🍱</span>
+      <h4>Seal Food Storage</h4>
+      <p>Keep food in airtight containers. Don't leave grain, rice, or food scraps accessible. Secure garbage bins. Reducing food access reduces rodent population near you.</p>
+    </div>
+    <div class="prevention-item">
+      <span class="prevention-icon">🧼</span>
+      <h4>Handwash Frequently</h4>
+      <p>Wash hands thoroughly with soap and water after being outdoors, in agricultural areas, or near any animal exposure. The WHO recommends this especially for travellers now.</p>
+    </div>
+    <div class="prevention-item">
+      <span class="prevention-icon">🚢</span>
+      <h4>Travel Precautions</h4>
+      <p>If you were on a cruise ship or in South America recently — monitor for symptoms for 45 days. Inform your doctor of travel history if you develop fever or breathing problems.</p>
+    </div>
+    <div class="prevention-item">
+      <span class="prevention-icon">⚡</span>
+      <h4>Act Fast on Symptoms</h4>
+      <p>Early ICU care dramatically improves survival. Don't wait for Stage 2. If you have fever + muscle aches + rodent or travel exposure — see a doctor the same day. Don't delay.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT INDIA STILL DOESN'T HAVE -->
+<section>
+  <div class="section-header">
+    <span class="section-num">09 /</span>
+    <h2>STRUCTURAL GAPS</h2>
+  </div>
+
+  <table class="risk-table">
+    <thead>
+      <tr>
+        <th>Gap</th>
+        <th>Current Status</th>
+        <th>Risk</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>No approved vaccine or antiviral</strong></td>
+        <td>Supportive ICU care is the only treatment. No USFDA-approved antiviral exists.</td>
+        <td><span class="tag tag-alert">High risk if delayed care</span></td>
+      </tr>
+      <tr>
+        <td><strong>Limited public awareness</strong></td>
+        <td>Rodent exposure is common in rural/agricultural India; hantavirus not widely known.</td>
+        <td><span class="tag tag-watch">Medium</span></td>
+      </tr>
+      <tr>
+        <td><strong>Rural diagnostic access</strong></td>
+        <td>VRDL network exists but uneven. Rural patients may face delays in PCR testing.</td>
+        <td><span class="tag tag-watch">Medium</span></td>
+      </tr>
+      <tr>
+        <td><strong>No India-specific rodent surveillance</strong></td>
+        <td>Leptospirosis is prioritized; hantavirus reservoirs in Indian rodents not fully mapped.</td>
+        <td><span class="tag tag-info">Low currently</span></td>
+      </tr>
+      <tr>
+        <td><strong>Travel monitoring gaps</strong></td>
+        <td>Cruise and air travellers from affected regions being screened, but 45-day incubation complicates tracing.</td>
+        <td><span class="tag tag-watch">Ongoing Watch</span></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-sources">
+    <strong style="color: var(--text-dim);">Data Sources:</strong> WHO Disease Outbreak News (DON599, DON600) · ICMR / National Institute of Virology · NCDC / IDSP India · Ministry of Health & Family Welfare India · CDC Hantavirus Situation Summary · ECDC Hantavirus AER 2023 · PAHO-WHO Epidemiological Alert · ANI News · Outlook India · The South First · Medical Dialogues India · Apollo Hospitals · Metropolis India
+  </div>
+  <div class="footer-disclaimer">
+    <strong style="color: var(--amber);">Disclaimer:</strong> This page provides public health information compiled from official sources (WHO, ICMR, NCDC, CDC) for awareness purposes only. It is not medical advice. If you are experiencing symptoms, call 108 or visit your nearest government hospital immediately. Emergency numbers listed are verified as of May 2026 but may vary by state. Hospital availability and ICU capacity should be confirmed by calling ahead. This page is updated as new official information is released.
+  </div>
+  <div style="font-family: var(--mono); font-size: 10px; color: var(--text-muted);">
+    Last updated: May 11, 2026 · wartoday.in/hantavirus · Built for public awareness
+  </div>
+</footer>
+
+<script>
+  // Accordion
+  function toggleAccordion(btn) {
+    const item = btn.closest('.accordion-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.accordion-item.open').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // Hospital city filter
+  function filterCity(city, btn) {
+    document.querySelectorAll('.city-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.hospital-item').forEach(item => {
+      if (city === 'all' || item.dataset.city === city) {
+        item.style.display = 'grid';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  }
+
+  // Live timestamp
+  function updateTime() {
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Kolkata' });
+    document.querySelectorAll('.live-dot').forEach(el => {
+      el.textContent = '● Live — ' + timeStr + ' IST';
+    });
+  }
+  updateTime();
+  setInterval(updateTime, 60000);
+
+  // Scroll fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('section, .stats-grid .stat-box, .country-card, .help-card, .govt-card').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(18px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
